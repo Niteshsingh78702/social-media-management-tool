@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: social-tool
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/flintzy
+    username: root
+    password: "use your own credentials"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: use your own credentials
+            client-secret: use your own credentials
+            scope:
+              - email
+              - profile
+
+# JWT Configuration
+app:
+  jwtSecret: TXlTdXBlclNlY3VyZVNlY3JldEtleUZvckp3dFRva2VuR2VuZXJhdGlvblRoYXRJc0xvbmdBbmRSYW5kb20xMjM0NQ==
+  jwtExpirationInMs: 864000000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:8080/oauth2/redirect

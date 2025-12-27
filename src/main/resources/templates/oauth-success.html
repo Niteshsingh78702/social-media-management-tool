@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Login Successful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        .success-icon {
+            color: #10b981;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .token-container {
+            background: #1f2937;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            position: relative;
+        }
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        .copy-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        .copied {
+            background: #10b981 !important;
+        }
+        .instructions {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .instructions h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        .instructions code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #dc2626;
+        }
+        .endpoint {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✅</div>
+        <h1>Login Successful!</h1>
+        <p style="color: #6b7280; margin-bottom: 20px;">You have successfully authenticated with Google</p>
+        
+        <div class="info">
+            <strong>🎫 Your JWT Token:</strong>
+        </div>
+        
+        <div class="token-container" id="tokenContainer">
+            <span th:text="${token}">TOKEN_WILL_APPEAR_HERE</span>
+        </div>
+        
+        <button class="copy-btn" onclick="copyToken()">📋 Copy Token</button>
+        
+        <div class="instructions">
+            <h3>📚 How to Use This Token</h3>
+            <p>Use this JWT token in the <code>Authorization</code> header for all API requests:</p>
+            <div class="endpoint">
+                <strong>Header:</strong> Authorization: Bearer YOUR_TOKEN
+            </div>
+            
+            <p style="margin-top: 15px;"><strong>Example API Endpoints:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><code>GET /api/facebook/pages</code> - Get linked pages</li>
+                <li><code>POST /api/facebook/link-pages</code> - Link Facebook pages</li>
+                <li><code>POST /api/facebook/post</code> - Publish a post</li>
+            </ul>
+        </div>
+
+        <div class="info" style="background: #f0fdf4; border-color: #10b981;">
+            <strong>💡 Tip:</strong> Use Postman or cURL to test the APIs. Copy this token and use it in the Authorization header.
+        </div>
+    </div>
+
+    <script>
+        function copyToken() {
+            const tokenText = document.getElementById('tokenContainer').innerText;
+            navigator.clipboard.writeText(tokenText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✅ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy Token';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
